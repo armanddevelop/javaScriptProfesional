@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h1>Promesas</h1>
+    <p><em>Open the console</em></p>
+
+    <ul>
+      <li><button id="sequence">Get Top Movies in Sequence</button></li>
+      <li><button id="parallel">Get Top Movies in Parallel</button></li>
+      <li><button id="fastest">Get Fastest Top Movie</button></li>
+    </ul>
+
+    <ul id="movies"></ul>
+    <script>
+      const urlBase = "https://api.themoviedb.org/3";
+      const apiKey = "b89fc45c2067cbd33560270639722eae";
+
+      async function getMovieById(id) {
+        const urlById = `${urlBase}/movie/${id}?api_key=${apiKey}`;
+        try {
+          const data = await fetch(urlById);
+          const movie = await data.json();
+          //return  fetch(urlById).then((response) => response.json());
+          return movie;
+        } catch (error) {
+          console.error("[getMovieByIdError]: ", error);
+        }
+      }
+
+      async function getPopularMovies() {
+        const urlPopularMovies = `${urlBase}/discover/movie?sort_by=popularity.desc&api_key=${apiKey}`;
+        try {
+          const data = await fetch(urlPopularMovies);
+          const popularMovies = await data.json();
+          return popularMovies.results;
+        } catch (error) {
+          console.error("[getPopularMoviesError]: ", error);
+        }
+        // return fetch(
+        //   `${urlBase}/discover/movie?sort_by=popularity.desc&api_key=${apiKey}`
+        // )
+        //   .then((response) => response.json())
+        //   .then((data) => data.results);
+      }
+
+      async function getTopMoviesIds(n = 3) {
+        // return getPropularMovies().then((popularMovies) =>
+        //   popularMovies.slice(0, n).map(({ id }) => id)
+        // );
+        try {
+          const popularMovies = await getPopularMovies();
+          const idsMovies = popularMovies.slice(0, n).map(({ id }) => id);
+          return idsMovies;
+        } catch (error) {
+          console.error("[getTopMoviesIdsError]: ", error);
+        }
+      }
+
+      async function getTopMoviesInSequence() {
+        const idsMovies = await getTopMoviesIds();
+        let movies = [];
+        for (let idx = 0; idx < idsMovies.length; idx++) {
+          const movieById = await getMovieById(idsMovies[idx]);
+          movies.push(movieById);
+        }
+        console.log("Esto vale movies ", movies);
+        return movies;
+      }
+
+      async function getTopMoviesInParallel() {
+        const idsMovies = await getTopMoviesIds();
+        let movies = [];
+        const moviePromises = idsMovies.map((id) => getMovieById(id));
+        try {
+          movies = await Promise.all(moviePromises);
+        } catch (error) {
+          console.error("[getTopMoviesInParallelError]: ", error);
+        }
+        return movies;
+      }
+
+      async function getFastestTopMovie() {
+        const idsMovies = await getTopMoviesIds();
+        const moviePromises = idsMovies.map((id) => getMovieById(id));
+        const movie = await Promise.race(moviePromises);
+        return [movie];
+      }
+
+      function renderMovies(movies) {
+        const movieList = document.getElementById("movies");
+        movieList.innerHTML = "";
+
+        movies.forEach((movie) => {
+          const listItem = document.createElement("li");
+          listItem.innerHTML = `
+            <img src="https://image.tmdb.org/t/p/w342${movie.poster_path}" />
+            <h5>${movie.title}</h5>
+            <p>Released on <em>${movie.release_date}</em></p>
+            `;
+
+          movieList.appendChild(listItem);
+        });
+      }
+
+      document.getElementById("sequence").onclick = async function () {
+        const movies = await getTopMoviesInSequence();
+        renderMovies(movies);
+      };
+
+      document.getElementById("parallel").onclick = async function () {
+        const movies = await getTopMoviesInParallel();
+        renderMovies(movies);
+      };
+
+      document.getElementById("fastest").onclick = async function () {
+        const movies = await getFastestTopMovie();
+        renderMovies(movies);
+      };
+    </script>
+  </body>
+</html>

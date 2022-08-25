@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h1>Prototype</h1>
+    <p><em>Open the console</em></p>
+    <script>
+      // const zelda = {
+      //   name: "Zelda",
+      // };
+      // zelda.salute = function () {
+      //   console.log(`Hi I'm ${this.name}`);
+      // };
+      // zelda.salute();
+
+      // const link = {
+      //   name: "Link",
+      // };
+
+      // link.salute = function () {
+      //   console.log(`Hi I'm ${this.name}`);
+      // };
+      // link.salute();
+      //Seamos mas eficientes
+      // function Hero(name) {
+      //   const hero = {
+      //     name: name,
+      //   };
+      //   hero.salute = function () {
+      //     console.log(`Hi I'm ${this.name}`);
+      //   };
+      //   return hero;
+      // }
+      // const zelda = new Hero("Zelda");
+      // const link = new Hero("Link");
+      // zelda.salute();
+      // link.salute();
+      //Seamos mas eficientes aun
+      // const heroMethods = {
+      //   salute: function () {
+      //     console.log(`Hi I'm ${this.name}`);
+      //   },
+      // };
+
+      // function Hero(name) {
+      //   const hero = {
+      //     name: name,
+      //   };
+      //   hero.salute = heroMethods.salute;
+      //   return hero;
+      // }
+      // const zelda = new Hero("Zelda");
+      // const link = new Hero("Link");
+      // zelda.salute();
+      // link.salute();
+
+      //Object.create
+      // const heroMethods = {
+      //   salute: function () {
+      //     console.log(`Hi I'm ${this.name}`);
+      //   },
+      // };
+
+      // function Hero(name) {
+      //   const hero = Object.create(heroMethods);
+      //   hero.name = name;
+      //   return hero;
+      // }
+      // const zelda = Hero("Zelda");
+      // const link = Hero("Link");
+      // zelda.salute();
+      // link.salute();
+
+      //los metodos de hero dentro de hero
+
+      // Hero.prototype.salute = function () {
+      //   console.log(`Hi I'm ${this.name}`);
+      // };
+      // function Hero(name) {
+      //   const hero = Object.create(Hero.prototype);
+      //   hero.name = name;
+      //   return hero;
+      // }
+
+      // const zelda = Hero("Zelda");
+      // const link = Hero("Link");
+      // zelda.salute();
+      // link.salute();
+
+      //new es un atajo es sugar sintaxis in javascript
+
+      function Hero(name) {
+        this.name = name;
+      }
+      Hero.prototype.salute = function () {
+        console.log(`NEW: ${this.name}`);
+      };
+      const zelda = new Hero("Zelda");
+      const link = new Hero("Link");
+      zelda.salute();
+      link.salute();
+    </script>
+  </body>
+</html>

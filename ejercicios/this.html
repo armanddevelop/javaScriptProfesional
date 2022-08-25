@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h1>THIS</h1>
+    <p><em>Open the console</em></p>
+    <script>
+      //this in Global scope
+      console.log("Esto vale this en el contexto global ", this);
+
+      //this in function
+      function whoIsThis() {
+        "use strict";
+        return console.log("Esto vale THIS desde whoIsThis ", this);
+      }
+      whoIsThis();
+
+      //THIS in object context
+      const person = {
+        name: "Pachis",
+        sayHi: function () {
+          console.log("hola ", this.name);
+        },
+      };
+      person.sayHi();
+      //THIS cuando sacamos una funcion de un objeto
+      const action = person.sayHi;
+      action();
+      //THIS en el contexto de una clase
+      function Person(name) {
+        this.name = name;
+      }
+      Person.prototype.salute = function () {
+        console.log("hola desde el prototipo", this.name);
+      };
+      const alicha = new Person("Alicha");
+      alicha.salute();
+    </script>
+  </body>
+</html>

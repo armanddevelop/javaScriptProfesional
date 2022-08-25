@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h1>Call, Apply and Bind functions</h1>
+    <ul>
+      <li><button class="call-to-action">Learn</button></li>
+      <li><button class="call-to-action">Learn More</button></li>
+      <li><button class="call-to-action">Never stop learning!!!</button></li>
+    </ul>
+    <script>
+      //set this with call function
+      function sayHi() {
+        console.log(`Hi I'm ${this.name} ${this.sourName}`);
+      }
+      const pachis = {
+        name: "alicha",
+        sourName: "heuche",
+      };
+      sayHi.call(pachis);
+      function walk(mts, direction) {
+        console.log(`${this.name} camina ${mts} mts hacia ${direction}`);
+      }
+      walk.call(pachis, 20, "oeste");
+      walk.apply(pachis, [20, "oeste"]);
+      /*CALL-comas
+        Apply-arguments []
+      */
+      //Estabelcer this en una funcion usando bind, bind crea una nueva funcion
+      const alicha = { name: "alissa", sourName: "mamoncilla" };
+      const alichaSayHi = sayHi.bind(alicha);
+      alichaSayHi();
+      //curring guardar parcialmente unos argumentos para despues llenar los demas
+      const walking = walk.bind(alicha, 500);
+      walking("sur");
+      //Cuando es util usar call,apply and bind
+
+      const buttons = document.getElementsByClassName("call-to-action");
+      // buttons.forEach((button) => {
+      //   button.onclick = function () {
+      //     alert("Hola pachis");
+      //   };
+      // });
+
+      Array.prototype.forEach.call(buttons, (button) => {
+        button.onclick = function () {
+          alert("Hola pachis");
+        };
+      });
+    </script>
+  </body>
+</html>

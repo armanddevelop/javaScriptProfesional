@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h1>Herenacia prototipal</h1>
+    <p><em>Open the console</em></p>
+    <script>
+      function Hero(name) {
+        this.name = name;
+      }
+      Hero.prototype.salute = function () {
+        console.log(`Hi I'm ${this.name}`);
+      };
+      const zelda = new Hero("Zelda");
+      console.log(zelda.name);
+      console.log(zelda.salute);
+      console.log("toString ", zelda.toString);
+      console.log("Zelda hasOwnProperty('name')", zelda.hasOwnProperty("name"));
+      console.log(
+        "Zelda hasOwnProperty('salute')",
+        zelda.hasOwnProperty("salute")
+      );
+    </script>
+  </body>
+</html>
