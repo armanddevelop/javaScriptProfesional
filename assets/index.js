@@ -17,3 +17,10 @@ buttonPlay.onclick = () => {
 buttonMute.onclick = () => {
   player.managerMuteControl();
 };
+
+if ("serviceWorker" in navigator) {
+  console.log("Entre :)");
+  navigator.serviceWorker
+    .register("/sw.js")
+    .catch((error) => console.error("[fileCreationError]: ", error.message));
+}

@@ -6,7 +6,6 @@ export class AutoPause {
   }
   run(player) {
     this.player = player;
-    console.log(this.player);
     const observer = new IntersectionObserver(this.handleIntersection, {
       threshold: this.threshold,
     });
