@@ -1,13 +1,13 @@
-const resources = [
-  "/",
-  "/index.html",
-  "/assets/index.js",
-  "/assets/MediaPlayer.js",
-  "/assets/plugins/AutoPlay.js",
-  "/assets/plugins/AutoPause.js",
-  "/assets/index.css",
-  "/assets/BigBuckBunny.mp4",
-];
+// const resources = [
+//   "/",
+//   "/index.html",
+//   "/assets/index.js",
+//   "/assets/MediaPlayer.js",
+//   "/assets/plugins/AutoPlay.js",
+//   "/assets/plugins/AutoPause.ts",
+//   "/assets/index.css",
+//   "/assets/BigBuckBunny.mp4",
+// ];
 const VERSION = "v1";
 
 self.addEventListener("install", (event) => {
@@ -49,7 +49,7 @@ async function updateCache(request) {
 async function precache() {
   try {
     const cache = await caches.open(VERSION);
-    return cache.addAll(resources);
+    return cache.addAll([]);
   } catch (error) {
     console.error("[precacheError]: ", error);
   }
