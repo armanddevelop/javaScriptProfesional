@@ -1,13 +1,14 @@
 import { MediaPlayer } from "./MediaPlayer";
 import { AutoPlay } from "./plugins/AutoPlay";
 import { AutoPause } from "./plugins/AutoPause";
+import { AdsPluing } from "./plugins/Ads";
 
 const video = document.querySelector("video");
 const buttonPlay = document.getElementById("playButton") as HTMLElement;
 const buttonMute = document.getElementById("muteButton") as HTMLElement;
 const player = new MediaPlayer({
   el: video as HTMLMediaElement,
-  plugins: [new AutoPlay(), new AutoPause()],
+  plugins: [new AutoPlay(), new AutoPause(), new AdsPluing()],
 });
 
 buttonPlay.onclick = () => {
